@@ -13,12 +13,7 @@ export class UserCredentialsManager {
   }[];
 
   private constructor() {
-    UserCredentialsManager.userCredentials = [
-      {
-        emailId: "abc",
-        password: "123",
-      },
-    ];
+    UserCredentialsManager.userCredentials = [];
 
     UserCredentialsManager.unverifiedUserCredentials = [];
   }

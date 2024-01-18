@@ -1,5 +1,5 @@
-import { DraftQuiz, Quiz } from "./Quiz";
-import { UsersManager, temp } from "./UsersManager";
+import { DraftQuiz, Problem, Quiz } from "./Quiz";
+import { UsersManager } from "./UsersManager";
 
 export class QuizManager {
   private static instance: QuizManager;
@@ -83,17 +83,25 @@ export class QuizManager {
     return this.liveQuizzes.some((quiz) => quiz.quizId === quizId);
   }
 
-  public static endQuiz({ quizId, adminEmailId }: { quizId: string, adminEmailId: string }) {
+  public static endQuiz({
+    quizId,
+    adminEmailId,
+  }: {
+    quizId: string;
+    adminEmailId: string;
+  }) {
     this.liveQuizzes = this.liveQuizzes.filter(
       (quiz) => quiz.quizId !== quizId
     );
     UsersManager.deleteQuiz({ emailId: adminEmailId, quizId });
   }
 
+
   private static generateQuizId(): string {
-    let val  = ""
+    let val = "";
     for (let i = 0; i < 8; i++) {
-      val+=Math.floor(Math.random() * 10).toString();
+      val += Math.floor(Math.random() * 10).toString();
     }
-    return val}
+    return val;
+  }
 }

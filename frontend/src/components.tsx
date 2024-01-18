@@ -22,7 +22,7 @@ export const Button = forwardRef(
 
 export const Background = forwardRef(
   (
-    props: AllHTMLAttributes<HTMLDivElement> ,
+    props: AllHTMLAttributes<HTMLDivElement>,
     ref: React.ForwardedRef<HTMLDivElement>
   ) => {
     return (

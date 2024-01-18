@@ -8,10 +8,14 @@ import createQuizHandler from "./api handlers/createQuizHandler";
 import addProblemHandler from "./api handlers/addProblemHandler";
 import joinQuizAuthHandler from "./api handlers/joinQuizAuthHandler";
 import floatQuizHandler from "./api handlers/floatQuizHandler";
+import saveDraftQuizHandler from "./api handlers/saveDraftQuizHandler";
 
 export function sendSuccessResponse(
   res: Response,
-  { data, message }: { data?: any; message: string }
+  { data, message }: {
+    data?: any;
+    message: string;
+  }
 ) {
   res.status(200).send({
     success: true,
@@ -48,11 +52,7 @@ export const statusCodes = {
   internalServerError: 500,
 };
 
-export const notPreAuthRequiringApis: {
-  path: string;
-  method: string;
-  handler: (req: Request, res: Response) => void;
-}[] = [
+export const notPreAuthRequiringApis: Api[] = [
   {
     path: "/",
     method: "POST",
@@ -87,7 +87,7 @@ export const notPreAuthRequiringApis: {
 
 
 // these assume that valid emailId and password is present in req.body
-export const authorisedApis = [
+export const authorisedApis:Api[] = [
   {
     path: "/getUserData",
     method: "POST",
@@ -97,6 +97,11 @@ export const authorisedApis = [
     path: "/createQuiz",
     method: "POST",
     handler: createQuizHandler,
+  },
+  {
+    path: "/saveDraftQuiz",
+    method: "POST",
+    handler: saveDraftQuizHandler,
   },
   // below two remaining
   {

@@ -1,56 +1,133 @@
-import React from 'react'
-import { sendApiRequest, } from '../api requests/sendApiRequest'
-import { useNavigate } from 'react-router-dom'
+import React from "react";
+import { Background, Button, Input } from "../components";
+import { sendApiRequest } from "../api requests/sendApiRequest";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
-    const [name, setName] = React.useState('')
-    const [password, setPassword] = React.useState('')
-    const [emailId, setEmailId] = React.useState('')
-    const [otpSent, setOtpSent] = React.useState(false)
-    const [enteredOtp, setEnteredOtp] = React.useState<number>()
-    const navigate = useNavigate()
-function navigateTo(path:string){
-    navigate(path)
-}
-    return (
-        <div>
-            <input type="text" onChange={(e) => {
-                setName(e.target.value)
-            }} placeholder='Name' disabled={otpSent}/>
-            <br />
-            <input type="text" onChange={(e) => {
-                setEmailId(e.target.value)
-            }} placeholder='Password' disabled={otpSent} />
-            <br />
-            <input type="text" onChange={(e) => {
-                setPassword(e.target.value)
-            }} placeholder='Email ID' disabled={otpSent} />
-            <br />
-            <br />
-            <button onClick={() => {
-                sendApiRequest("/signup", { name, emailId, password }).then((res) => {
-                    if (res.success) {
-                        setOtpSent(true)
-                    }
-                })
-            }} disabled={otpSent}>Submit</button><br /><br />
-            {otpSent && <div>
-                Enter OTP: <input type="text" onChange={(e) => {
-                    setEnteredOtp(Number.parseInt(e.target.value))
-                }} />
-                <button onClick={() => {
-                  sendApiRequest("/otpVerify", { emailId, otp: enteredOtp }).then((res) => {
-                    if(res.success){
-                      navigateTo("/login")
-                    }
-                    else{
-                      setOtpSent(false)
-                    }
-                  })
-                }}>Submit</button>
+  const [name, setName] = React.useState("");
+  const [emailId, setEmailId] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
+  const [message, setMessage] = React.useState("");
+  const [showOTPBox, setShowOTPBox] = React.useState(false);
+  const [otp, setOtp] = React.useState("");
+  const navigator = useNavigate();
 
-            </div>}
-        </div>)
+  return (
+    <Background>
+      <div className="h-[100vh] flex items-center flex-col">
+      <div className="flex justify-evenly mt-10 w-52 underline text-slate-200">
+          <button
+            onClick={() => {
+              navigator("/login");
+            }}
+          >
+            Login
+          </button>
+          |
+          <button
+            onClick={() => {
+              navigator("/");
+            }}
+          >
+            Join quiz
+          </button>
+        </div>
+        <div className="flex flex-col w-[300px] gap-2 relative bg-slate-950 p-5  rounded-xl  mt-52">
+          <Input
+            disabled={loading || showOTPBox}
+            placeholder="Name"
+            onChange={(e) => {
+              if (message) setMessage("");
+              setName(e.target.value);
+            }}
+            value={name}
+          />
+          <Input
+            placeholder="Email ID"
+            disabled={loading || showOTPBox}
+            onChange={(e) => {
+              if (message) setMessage("");
+              setEmailId(e.target.value);
+            }}
+            value={emailId}
+          />
+          <Input
+            placeholder="Create Password"
+            disabled={loading}
+            onChange={(e) => {
+              if (message) setMessage("");
+              setPassword(e.target.value);
+            }}
+            value={password}
+          />
+          {showOTPBox && (
+            <Input
+              style={{ marginTop: "30px" }}
+              placeholder="Enter OTP"
+              disabled={loading}
+              onChange={(e) => {
+                if (message) setMessage("");
+                setOtp(e.target.value);
+              }}
+              value={otp}
+            />
+          )}
+          {!showOTPBox && (
+            <Button
+              onClick={() => {
+                setLoading(true);
+                sendApiRequest("/signup", {
+                  name,
+                  emailId,
+                  password,
+                }).then((res) => {
+                  setLoading(false);
+                  setMessage(res.message!);
+                  if (!res.success) {
+                    return;
+                  }
+                  setShowOTPBox(true);
+                });
+              }}
+              disabled={loading}
+            >
+              Signup
+            </Button>
+          )}
+          {showOTPBox && (
+            <Button
+              onClick={() => {
+                const otpNum = parseInt(otp);
+                setLoading(true);
+                sendApiRequest("/otpVerify", {
+                  emailId,
+                  otp: otpNum,
+                }).then((res) => {
+                  setLoading(false);
+                  setMessage(res.message!);
+                  if (!res.success) {
+                    return;
+                  }
+                  localStorage.setItem("emailId", emailId);
+                  localStorage.setItem("password", password);
+                  navigator("/dashboard", {
+                    replace: true,
+                  });
+                });
+              }}
+              disabled={loading}
+            >
+              Verify OTP
+            </Button>
+          )}
+        </div>
+        {loading && <p className="text-white font-bold mt-4">Loading...</p>}
+        {message && <p className="text-white font-bold mt-4">{message}</p>}
+      </div>
+    </Background>
+  );
 }
 
-export default Signup
+
+export default Signup;

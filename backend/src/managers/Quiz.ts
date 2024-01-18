@@ -6,6 +6,7 @@ export type Problem = {
   question: string;
   options: string[];
   answer: number;
+  timeAlloted: number;
 };
 export class DraftQuiz {
   quizId: string;

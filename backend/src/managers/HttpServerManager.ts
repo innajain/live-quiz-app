@@ -52,7 +52,7 @@ export class HttpServerManager {
       }
     });
 
-    authRouter.get("/", (req, res) => {
+    authRouter.post("/", (req, res) => {
       res.status(200).send({
         success: true,
         message: "Authorised",

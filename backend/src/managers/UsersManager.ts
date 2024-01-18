@@ -1,23 +1,5 @@
-import { DraftQuiz, Participant, Quiz } from "./Quiz";
+import { DraftQuiz, Participant, Problem, Quiz } from "./Quiz";
 import { QuizManager } from "./QuizManager";
-export const temp = new DraftQuiz("my_quiz");
-temp.problems = [
-  {
-    question: "What is 2+2?",
-    options: ["1", "2", "3", "4"],
-    answer: 3,
-  },
-  {
-    question: "What is 2+3?",
-    options: ["1", "2", "3", "5"],
-    answer: 3,
-  },
-  {
-    question: "What is 2+4?",
-    options: ["1", "2", "3", "6"],
-    answer: 3,
-  },
-];
 
 export class User {
   name: string;
@@ -27,7 +9,7 @@ export class User {
   constructor(name: string, emailId: string) {
     this.name = name;
     this.emailId = emailId;
-    this.draftQuizzes = [temp];
+    this.draftQuizzes = [];
     this.liveQuizzes = [];
   }
 }
@@ -36,7 +18,7 @@ export class UsersManager {
   private static instance: UsersManager;
   private static users: User[];
   private constructor() {
-    UsersManager.users = [new User("inna", "abc")];
+    UsersManager.users = [];
   }
   public static getInstance(): UsersManager {
     if (!UsersManager.instance) {
@@ -84,7 +66,7 @@ export class UsersManager {
   }
   public static debug() {
     setInterval(() => {
-      console.log("users: ", this.users[0]);
+      console.log("users: ", this.users);
     }, 5000);
   }
   public static floatQuiz({
@@ -130,5 +112,24 @@ export class UsersManager {
     user!.liveQuizzes = user!.liveQuizzes.filter(
       (quiz) => quiz.quizId !== quizId
     );
+  }
+
+  public static saveDraftQuiz({
+    emailId,
+    problemsArray,
+  }: {
+    emailId: string;
+    problemsArray: Problem[];
+  }): { draftQuizId: string } {
+    const user = this.users.find((user) => user.emailId === emailId)!;
+
+    let draftQuizId = this.generateDraftQuizId();
+    while (user!.draftQuizzes.find((quiz) => quiz.quizId === draftQuizId)) {
+      draftQuizId = this.generateDraftQuizId();
+    }
+    const draftQuiz = new DraftQuiz(draftQuizId);
+    draftQuiz.problems = problemsArray;
+    user.draftQuizzes.push(draftQuiz);
+    return { draftQuizId };
   }
 }

@@ -19,6 +19,6 @@ export default function getUserDataHandler(
   });
   sendSuccessResponse(res, {
     message: "User data",
-    data: output.data
+    data: output.data,
   });
 }
