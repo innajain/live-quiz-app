@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { redirect, useNavigate, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { Background, Button } from "../components";
 import { sendApiRequest } from "../api requests/sendApiRequest";
 
@@ -7,7 +7,6 @@ function DraftQuiz() {
   const { draftQuizId } = useParams<{ draftQuizId: string }>();
   const [message, setMessage] = React.useState("");
   const [loading, setLoading] = React.useState(false);
-  const navigator = useNavigate();
   let draftQuiz = {};
 
   useEffect(() => {

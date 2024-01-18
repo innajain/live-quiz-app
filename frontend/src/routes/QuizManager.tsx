@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { SocketManager } from "../api requests/SocketManager";
-import { useLocation, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { Background, Button } from "../components";
 
 function QuizManager() {

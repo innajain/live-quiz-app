@@ -1,6 +1,5 @@
 import React from "react";
 import { SocketManager } from "../api requests/SocketManager";
-import { Problem } from "../routes/Quiz";
 
 export function endQuizListener({
   setQuizState

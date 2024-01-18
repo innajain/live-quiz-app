@@ -135,7 +135,7 @@ function CreateQuiz() {
                   : ""
               } 
               `}
-              onClick={(e) =>
+              onClick={() =>
                 setProblems((problems) => {
                   problems[currentProblemIndex].correctAnswer = index;
                   return [...problems];
