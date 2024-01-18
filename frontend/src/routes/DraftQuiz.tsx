@@ -7,7 +7,6 @@ function DraftQuiz() {
   const { draftQuizId } = useParams<{ draftQuizId: string }>();
   const [message, setMessage] = React.useState("");
   const [loading, setLoading] = React.useState(false);
-  let draftQuiz = {};
 
   useEffect(() => {
     sendApiRequest("/authorised/getUserData", {
@@ -15,9 +14,7 @@ function DraftQuiz() {
       password: "123",
     }).then((res) => {
       if (res.success) {
-        draftQuiz = res.data.draftQuizzes.find(
-          (quiz: any) => quiz.quizId === draftQuizId
-        );
+        
       } else setMessage(res.message!);
     });
   }, []);
