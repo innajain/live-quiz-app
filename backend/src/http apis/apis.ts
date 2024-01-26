@@ -12,7 +12,10 @@ import saveDraftQuizHandler from "./api handlers/saveDraftQuizHandler";
 
 export function sendSuccessResponse(
   res: Response,
-  { data, message }: {
+  {
+    data,
+    message,
+  }: {
     data?: any;
     message: string;
   }
@@ -55,6 +58,15 @@ export const statusCodes = {
 export const notPreAuthRequiringApis: Api[] = [
   {
     path: "/",
+    method: "GET",
+    handler: (req: Request, res: Response) => {
+      sendSuccessResponse(res, {
+        message: "Hello World!",
+      });
+    },
+  },
+  {
+    path: "/",
     method: "POST",
     handler: (req: Request, res: Response) => {
       sendSuccessResponse(res, {
@@ -82,12 +94,10 @@ export const notPreAuthRequiringApis: Api[] = [
     method: "POST",
     handler: joinQuizHandler,
   },
-  
 ];
 
-
 // these assume that valid emailId and password is present in req.body
-export const authorisedApis:Api[] = [
+export const authorisedApis: Api[] = [
   {
     path: "/getUserData",
     method: "POST",
