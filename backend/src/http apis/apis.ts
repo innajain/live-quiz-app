@@ -90,7 +90,7 @@ export const notPreAuthRequiringApis: Api[] = [
     handler: loginHandler,
   },
   {
-    path: "joinQuiz",
+    path: "/joinQuiz",
     method: "POST",
     handler: joinQuizHandler,
   },
