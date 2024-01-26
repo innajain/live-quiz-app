@@ -7,6 +7,7 @@ export const sendApiRequest = async (path: string, body: any): Promise<{success:
       "Content-Type": "application/json",
     },
     body: JSON.stringify(body),
+    mode: "cors",
   })
     .then((res) => res.json())
     return response;
