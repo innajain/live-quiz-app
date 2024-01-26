@@ -1,6 +1,6 @@
 fetch("https://live-quiz-app-backend.vercel.app/1", 
     {
-        method: "POST",
+        method: "GET",
         headers: {
             "Content-Type": "application/json",
         },
