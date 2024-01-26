@@ -28,7 +28,6 @@ function CreateQuiz() {
       emailId: localStorage.getItem("emailId"),
       password: localStorage.getItem("password"),
     }).then((response) => {
-      console.log("first")
       if (response.success) {
         setLoggedIn(true);
       }

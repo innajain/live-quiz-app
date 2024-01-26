@@ -33,7 +33,6 @@ export function ProblemScreen({
   const [availableTime, setAvailableTime] = React.useState<number>(5);
 
   useEffect(() => {
-    console.log("first")
     setAvailableTime(timeAlloted);
     const timer = setInterval(() => {
         setAvailableTime((t) => {

@@ -36,6 +36,6 @@ server.listen(3000, () => {
   console.log("Server started");
 });
 
-UserCredentialsManager.debug();
-UsersManager.debug();
-QuizManager.debug();
+// UserCredentialsManager.debug();
+// UsersManager.debug();
+// QuizManager.debug();

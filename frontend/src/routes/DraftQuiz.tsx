@@ -30,7 +30,6 @@ function DraftQuiz() {
               password: "123",
             }).then((res) => {
               if (res.success) {
-                console.log("first")
                 window.location.replace(`http://localhost:5173/QM/quiz/${res.data.quizId}`);
                 return;
               }
