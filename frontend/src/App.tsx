@@ -1,5 +1,5 @@
 import "./App.css";
-import { HashRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import JoinQuiz from "./routes/JoinQuiz";
 import Signup from "./routes/Signup";
 import Login from "./routes/Login";
@@ -11,7 +11,7 @@ import CreateQuiz from "./routes/CreateQuiz";
 
 function App() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<JoinQuiz />} />
         <Route path="/signup" element={<Signup />} />
@@ -23,7 +23,7 @@ function App() {
         <Route path="/dashboard/createQuiz" element={<CreateQuiz />} />
         <Route path="/*" element={<div>Not Found</div>} />
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 
