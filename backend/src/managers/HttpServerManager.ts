@@ -10,7 +10,12 @@ export class HttpServerManager {
   private constructor() {
     HttpServerManager.app = express();
     HttpServerManager.app.use(express.json());
-    HttpServerManager.app.use(cors());
+    HttpServerManager.app.use(cors(
+      {
+        origin: "*",
+        methods: ["GET", "POST"],
+      }
+    ));
   }
 
   public static getInstace(): HttpServerManager {
