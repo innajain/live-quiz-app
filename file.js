@@ -1,4 +1,4 @@
-fetch("https://live-quiz-app-backend.vercel.app/joinQuiz", 
+fetch("https://live-quiz-app-backend.vercel.app/1", 
     {
         method: "POST",
         headers: {

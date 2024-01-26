@@ -76,7 +76,7 @@ export const notPreAuthRequiringApis: Api[] = [
   },
   {
     path: "/try",
-    method: "POST",
+    method: "GET",
     handler: (req: Request, res: Response) => {
       sendSuccessResponse(res, {
         message: "Hello World!",
