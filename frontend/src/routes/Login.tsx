@@ -9,6 +9,28 @@ function Login() {
   const [loading, setLoading] = React.useState(false);
   const [message, setMessage] = React.useState("");
   const navigator = useNavigate();
+  const [loginStatus, setLoginStatus] = React.useState<"waiting"| "unauthorised" | "logged in">("waiting");
+
+  React.useEffect(() => {
+    sendApiRequest("/authorised", {
+      emailId: localStorage.getItem("emailId"),
+      password: localStorage.getItem("password"),
+    }).then((response) => {
+      if (response.success) {
+        setLoginStatus("logged in");
+      }
+      else{
+        setLoginStatus("unauthorised");
+      }
+    });
+  });
+  
+  if (loginStatus === "logged in") {
+    navigator("/dashboard", {
+      replace: true,
+    });
+    return
+  }
 
   return (
     <Background>

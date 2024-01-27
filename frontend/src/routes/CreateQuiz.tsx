@@ -30,7 +30,7 @@ const CreateQuizContext = React.createContext<{
 });
 
 function CreateQuiz() {
-  const [loggedIn, setLoggedIn] = React.useState<boolean>(false);
+  const [loginStatus, setLoginStatus] = React.useState<"waiting"| "unauthorised" | "logged in">("waiting");
   const [currentProblemIndex, setCurrentProblemIndex] = React.useState(0);
   const [problems, setProblems] = React.useState<Problem[]>([
     {
@@ -49,16 +49,19 @@ function CreateQuiz() {
       password: localStorage.getItem("password"),
     }).then((response) => {
       if (response.success) {
-        setLoggedIn(true);
+        setLoginStatus("logged in");
+      }
+      else{
+        setLoginStatus("unauthorised");
       }
     });
   });
 
-  if (!loggedIn)
+  if (loginStatus !== "logged in")
     return (
       <Background>
         <div className="h-[100vh] flex flex-col justify-center text-xl">
-          Please login first
+          {loginStatus== "unauthorised"? "Please login first" : "Loading..."}
         </div>
       </Background>
     );
