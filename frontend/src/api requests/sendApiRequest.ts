@@ -7,5 +7,5 @@ export const sendApiRequest = async (path: string, body: any): Promise<{success:
     body: JSON.stringify(body),
   })
     .then((res) => res.json())
-    return response;
+    return response; 
 };
